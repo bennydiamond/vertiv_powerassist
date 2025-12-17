@@ -1,0 +1,29 @@
+# Home Assistant local dev config ignores (relative to config/)
+
+# Python caches
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.pytype/
+.pyre/
+*.py[cod]
+
+# HA runtime state
+.storage/
+.cloud/
+tts/
+deps/
+home-assistant.log*
+home-assistant.log.fault
+home-assistant_v2.db*
+*.db
+*.db-shm
+*.db-wal
+*.sqlite*
+.uuid
+.HA_VERSION
+.ipynb_checkpoints/
+*.yaml.bak
+*.yaml.backup
+

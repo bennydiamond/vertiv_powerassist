@@ -1,0 +1,21 @@
+name: PR Labeler
+
+on:
+  pull_request:
+    paths:
+      - 'custom_components/vertiv/**'
+      - '.github/labeler.yml'
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 0'
+
+jobs:
+  labeler:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Apply labels
+        uses: actions/labeler@v5
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}

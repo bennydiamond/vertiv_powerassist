@@ -1,0 +1,99 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Vertiv PowerAssist",
+        "description": "Connectez-vous à votre hôte PowerAssist.",
+        "data": {
+          "host": "Hôte",
+          "port": "Port",
+          "name": "Nom"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Impossible de se connecter",
+      "timeout": "Délai de connexion dépassé",
+      "invalid_response": "Réponse inattendue du périphérique",
+      "unknown": "Erreur inconnue"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "runtime_remaining": {
+        "name": "Autonomie restante"
+      },
+      "battery_capacity_percent": {
+        "name": "Capacité de la batterie"
+      },
+      "battery_voltage_reading": {
+        "name": "Tension de la batterie"
+      },
+      "output_load_percent": {
+        "name": "Charge de sortie"
+      },
+      "input_voltage_reading": {
+        "name": "Tension d'entrée"
+      },
+      "output_voltage_reading": {
+        "name": "Tension de sortie"
+      }
+    },
+    "binary_sensor": {
+      "ac_power_present": {
+        "name": "Alimentation secteur présente"
+      },
+      "battery_charging": {
+        "name": "Batterie en charge"
+      },
+      "battery_discharging": {
+        "name": "Fonctionne sur batterie"
+      },
+      "battery_needs_replacement": {
+        "name": "Batterie à remplacer"
+      },
+      "system_overload": {
+        "name": "Surcharge du système"
+      },
+      "system_running": {
+        "name": "Onduleur en marche"
+      },
+      "battery_low": {
+        "name": "Limite de batterie faible atteinte"
+      }
+    },
+    "select": {
+      "shutdown_trigger": {
+        "name": "Type de déclenchement de l'arrêt",
+        "state": {
+          "by_minutes": "Par minutes de batterie restantes",
+          "by_percent": "Par pourcentage de batterie restant",
+          "after_x": "Après X minutes",
+          "immediately": "Immédiatement"
+        }
+      }
+    },
+    "number": {
+      "shutdown_battery_time_min": {
+        "name": "Seuil de temps de batterie pour l'arrêt"
+      },
+      "shutdown_battery_capacity_percent": {
+        "name": "Seuil de capacité de batterie pour l'arrêt"
+      },
+      "shutdown_after_x_minutes": {
+        "name": "Arrêt après X minutes"
+      }
+    },
+    "switch": {
+      "maintenance_mode": {
+        "name": "Mode maintenance"
+      },
+      "shutdown_if_all_loses_power": {
+        "name": "Arrêt si tous les onduleurs perdent l'alimentation"
+      },
+      "enable_scripted_shutdown": {
+        "name": "Activer l'arrêt par script"
+      }
+    }
+  }
+}

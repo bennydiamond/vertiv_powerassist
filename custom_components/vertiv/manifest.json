@@ -1,0 +1,12 @@
+{
+	"domain": "vertiv",
+	"name": "Vertiv PowerAssist",
+	"version": "0.0.1",
+	"documentation": "https://github.com/bennydiamond/vertiv_powerassist",
+	"requirements": [],
+	"dependencies": [],
+	"codeowners": ["@bennydiamond"],
+	"config_flow": true,
+	"iot_class": "local_polling",
+	"integration_type": "service"
+}
