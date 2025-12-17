@@ -1,0 +1,8 @@
+component: vertiv:
+  - custom_components/vertiv/**
+
+translations:
+  - custom_components/vertiv/translations/**
+
+docs:
+  - custom_components/vertiv/**/*.md

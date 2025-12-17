@@ -1,0 +1,99 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "title": "Vertiv PowerAssist",
+                "description": "Connect to your PowerAssist host.",
+                "data": {
+                    "host": "Host",
+                    "port": "Port",
+                    "name": "Name"
+                }
+            }
+        },
+        "error": {
+            "cannot_connect": "Unable to connect",
+            "timeout": "Connection timed out",
+            "invalid_response": "Unexpected response from device",
+            "unknown": "Unknown error"
+        }
+    },
+    "entity": {
+        "sensor": {
+            "runtime_remaining": {
+                "name": "Runtime Remaining"
+            },
+            "battery_capacity_percent": {
+                "name": "Battery Capacity"
+            },
+            "battery_voltage_reading": {
+                "name": "Battery Voltage"
+            },
+            "output_load_percent": {
+                "name": "Output Load"
+            },
+            "input_voltage_reading": {
+                "name": "Input Voltage"
+            },
+            "output_voltage_reading": {
+                "name": "Output Voltage"
+            }
+        },
+        "binary_sensor": {
+            "ac_power_present": {
+                "name": "AC Power Present"
+            },
+            "battery_charging": {
+                "name": "Battery Charging"
+            },
+            "battery_discharging": {
+                "name": "Running on Battery"
+            },
+            "battery_needs_replacement": {
+                "name": "Battery Needs Replacement"
+            },
+            "system_overload": {
+                "name": "System Overload"
+            },
+            "system_running": {
+                "name": "UPS Running"
+            },
+            "battery_low": {
+                "name": "Battery Low Limit Reached"
+            }
+        },
+        "select": {
+            "shutdown_trigger": {
+                "name": "Shutdown Trigger Type",
+                "state": {
+                    "by_minutes": "By Battery Minutes Remaining",
+                    "by_percent": "By Battery Percent Remaining",
+                    "after_x": "After X Minutes",
+                    "immediately": "Immediately"
+                }
+            }
+        },
+        "number": {
+            "shutdown_battery_time_min": {
+                "name": "Shutdown Battery Time Threshold"
+            },
+            "shutdown_battery_capacity_percent": {
+                "name": "Shutdown Battery Capacity Threshold"
+            },
+            "shutdown_after_x_minutes": {
+                "name": "Shutdown After X Minutes"
+            }
+        },
+        "switch": {
+            "maintenance_mode": {
+                "name": "Maintenance Mode"
+            },
+            "shutdown_if_all_loses_power": {
+                "name": "Shutdown If All UPS Lose Power"
+            },
+            "enable_scripted_shutdown": {
+                "name": "Enable Scripted Shutdown"
+            }
+        }
+    }
+}
