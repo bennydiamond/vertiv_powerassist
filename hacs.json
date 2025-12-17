@@ -1,0 +1,7 @@
+{
+  "name": "Vertiv PowerAssist",
+  "render_readme": true,
+  "zip_release": false,
+  "content_in_root": false,
+  "homeassistant": "2024.12.0"
+}
