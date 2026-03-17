@@ -1,8 +1,11 @@
-component: vertiv:
-  - custom_components/vertiv/**
+component-vertiv:
+  - changed-files:
+      - any-glob-to-any-file: custom_components/vertiv/**
 
 translations:
-  - custom_components/vertiv/translations/**
+  - changed-files:
+      - any-glob-to-any-file: custom_components/vertiv/translations/**
 
 docs:
-  - custom_components/vertiv/**/*.md
+  - changed-files:
+      - any-glob-to-any-file: custom_components/vertiv/**/*.md
