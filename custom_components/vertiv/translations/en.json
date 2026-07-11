@@ -15,6 +15,7 @@
             "cannot_connect": "Unable to connect",
             "timeout": "Connection timed out",
             "invalid_response": "Unexpected response from device",
+            "invalid_host": "Invalid host or port",
             "unknown": "Unknown error"
         }
     },
