@@ -15,6 +15,7 @@
       "cannot_connect": "Impossible de se connecter",
       "timeout": "Délai de connexion dépassé",
       "invalid_response": "Réponse inattendue du périphérique",
+      "invalid_host": "Hôte ou port invalide",
       "unknown": "Erreur inconnue"
     }
   },

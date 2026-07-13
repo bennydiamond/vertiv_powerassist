@@ -5,12 +5,13 @@ from __future__ import annotations
 from datetime import timedelta
 import logging
 from typing import Any, Final, TypedDict
+from urllib.parse import urlsplit
 
 import aiohttp
 from aiohttp import ClientTimeout
 
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import CONF_HOST
+from homeassistant.const import CONF_HOST, CONF_PORT
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
@@ -43,21 +44,44 @@ HEADERS: Final = {"Content-type": "application/json"}
 SCAN_INTERVAL: Final = timedelta(seconds=SCAN_INTERVAL_SECONDS)
 
 
+def normalize_host_and_port(host: str, port: int = DEFAULT_PORT) -> tuple[str, int]:
+    """Normalize PowerAssist host values entered during config flow."""
+    value = str(host).strip()
+    parsed = urlsplit(value if "://" in value else f"//{value}")
+
+    normalized_host = parsed.hostname
+    if not normalized_host:
+        raise ValueError("Invalid host")
+
+    try:
+        normalized_port = parsed.port or int(port)
+    except ValueError as err:
+        raise ValueError("Invalid port") from err
+
+    return normalized_host, normalized_port
+
+
 class VertivPowerAssistApi:
     """Class to communicate with the Vertiv PowerAssist API."""
 
-    def __init__(self, hass: HomeAssistant, host: str, unique_id: str) -> None:
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        host: str,
+        unique_id: str,
+        port: int = DEFAULT_PORT,
+    ) -> None:
         """Initialize the API object."""
         self._hass = hass
-        self._host = host
+        self._host, self._port = normalize_host_and_port(host, port)
         self._unique_id = unique_id
-        self._url = f"https://{host}:{DEFAULT_PORT}{API_ENDPOINT}"
+        self._url = f"https://{self._host}:{self._port}{API_ENDPOINT}"
 
     async def async_test_connection(self) -> dict[str, Any]:
         """Test the connection and fetch initial data."""
         data = await self.async_update_data()
         if not data or not data.get(KEY_UNIQUE_ID):
-            raise aiohttp.ClientError("Invalid response or missing device data.")
+            raise UpdateFailed("Invalid response or missing device data.")
 
         return data
 
@@ -67,7 +91,7 @@ class VertivPowerAssistApi:
         """Centralized method for API calls."""
         try:
             session = async_get_clientsession(self._hass)
-            url = f"https://{self._host}:{DEFAULT_PORT}/api/PowerAssist{endpoint}"
+            url = f"https://{self._host}:{self._port}/api/PowerAssist{endpoint}"
             async with session.request(
                 method,
                 url,
@@ -95,6 +119,9 @@ class VertivPowerAssistApi:
         except TimeoutError as err:
             _LOGGER.warning("Request timed out for %s: %s", self._host, err)
             raise UpdateFailed("Request timed out") from err
+        except aiohttp.ClientError as err:
+            _LOGGER.warning("API request failed for %s: %s", self._host, err)
+            raise UpdateFailed(f"API request failed for {self._host}") from err
 
     async def async_update_data(self) -> dict[str, Any]:
         """Fetch all necessary data from the Vertiv PowerAssist API."""
@@ -130,13 +157,13 @@ async def async_setup_entry(
 ) -> bool:
     """Set up Vertiv PowerAssist from a config entry."""
     host = entry.data[CONF_HOST]
+    port = entry.data.get(CONF_PORT, DEFAULT_PORT)
     unique_id = entry.unique_id if entry.unique_id else host
 
-    api = VertivPowerAssistApi(hass, host, unique_id)
-
     try:
+        api = VertivPowerAssistApi(hass, host, unique_id, port)
         await api.async_test_connection()
-    except (TimeoutError, UpdateFailed, aiohttp.ClientError) as ex:
+    except (ValueError, TimeoutError, UpdateFailed, aiohttp.ClientError) as ex:
         _LOGGER.error("Initial connection to Vertiv PowerAssist failed: %s", ex)
         raise ConfigEntryNotReady(
             f"Could not connect to Vertiv PowerAssist at {host}"

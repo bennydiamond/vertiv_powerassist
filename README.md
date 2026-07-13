@@ -27,8 +27,8 @@ Behavior may differ across UPS models or multi‑UPS environments.
 
 ## Configuration
 During setup you’ll be asked for:
-- Hostname or IP of the PowerAssist machine
-- Port (default: 8210, unless you changed it)
+- Hostname, IP, or URL of the PowerAssist machine
+- Port (default: 8210, unless you changed it). If the host field includes a URL port, that port is used.
 - Device name
 
 After setup, you can fine‑tune shutdown behavior from the Vertiv device page in Home Assistant.
@@ -76,6 +76,8 @@ After setup, you can fine‑tune shutdown behavior from the Vertiv device page i
 ## Troubleshooting
 - Can’t connect during setup
   - Verify host/port and that PowerAssist is running and reachable from Home Assistant.
+  - Enter the address of the machine running PowerAssist, not the UPS management-card address.
+  - If Home Assistant runs in Docker on the same Linux host as PowerAssist, use the host network address that is reachable from the Home Assistant container. Depending on your install, this may be `127.0.0.1`, the host LAN IP, or a configured Docker host-gateway name.
 
 ## Credits
 - Vertiv PowerAssist provides the local API this integration communicates with.
