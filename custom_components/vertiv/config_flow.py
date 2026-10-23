@@ -66,7 +66,7 @@ class VertivPowerAssistConfigFlow(ConfigFlow, domain=DOMAIN):
     ) -> ConfigFlowResult:
         """Handle the initial step."""
         if user_input is None:
-            return self.async_show_form(data_schema=DATA_SCHEMA)
+            return self.async_show_form(step_id="user", data_schema=DATA_SCHEMA)
 
         errors: dict[str, str] = {}
         info: dict[str, Any] | None = None
@@ -86,4 +86,6 @@ class VertivPowerAssistConfigFlow(ConfigFlow, domain=DOMAIN):
         if not errors and info:
             return self.async_create_entry(title=info["title"], data=user_input)
 
-        return self.async_show_form(data_schema=DATA_SCHEMA, errors=errors)
+        return self.async_show_form(
+            step_id="user", data_schema=DATA_SCHEMA, errors=errors
+        )
